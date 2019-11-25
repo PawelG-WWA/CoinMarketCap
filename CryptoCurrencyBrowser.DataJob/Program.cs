@@ -6,7 +6,13 @@ namespace CryptoCurrencyBrowser.DataJob
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Host.Bootstrap();
+
+            Host.RunJobs();
+
+            Console.WriteLine("Press any key to prevent all jobs from running");
+
+            Console.ReadKey();
         }
     }
 }
