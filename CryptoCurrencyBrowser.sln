@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoCurrencyBrowser", "CryptoCurrencyBrowser\CryptoCurrencyBrowser.csproj", "{5B3735D1-698A-4BC3-9AF8-8A5659C3BD0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoCurrencyBrowser.DataJob", "CryptoCurrencyBrowser.DataJob\CryptoCurrencyBrowser.DataJob.csproj", "{FF9E1999-EE51-44ED-B51B-0CE40633596E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B3735D1-698A-4BC3-9AF8-8A5659C3BD0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B3735D1-698A-4BC3-9AF8-8A5659C3BD0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B3735D1-698A-4BC3-9AF8-8A5659C3BD0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B3735D1-698A-4BC3-9AF8-8A5659C3BD0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF9E1999-EE51-44ED-B51B-0CE40633596E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF9E1999-EE51-44ED-B51B-0CE40633596E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF9E1999-EE51-44ED-B51B-0CE40633596E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF9E1999-EE51-44ED-B51B-0CE40633596E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2279982D-E1F8-488B-877F-F82CAF11DF73}
+	EndGlobalSection
+EndGlobal
