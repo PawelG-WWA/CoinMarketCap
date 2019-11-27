@@ -1,7 +1,9 @@
-﻿namespace CryptoCurrencyBrowser.DataJob.Jobs.Abstractions
+﻿using System.Threading.Tasks;
+
+namespace CryptoCurrencyBrowser.DataJob.Jobs.Abstractions
 {
     public interface IJob
-    {
-        void Run();
+    { 
+        Task DoWork();
     }
 }

@@ -8,11 +8,12 @@ namespace CryptoCurrencyBrowser.DataJob
         {
             Host.Bootstrap();
 
-            Host.RunJobs();
+            if (Host.IsBootstrapSuccessful)
+            {
+                Host.StartJobs();
+            }
 
-            Console.WriteLine("Press any key to prevent all jobs from running");
-
-            Console.ReadKey();
+            Console.ReadLine();
         }
     }
 }
