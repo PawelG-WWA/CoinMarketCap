@@ -1,10 +1,15 @@
-﻿using CryptoCurrencyBrowser.DataJob.Jobs.Abstractions;
+﻿using CryptoCurrencyBrowser.Application.DataJob.Models;
+using CryptoCurrencyBrowser.Application.Persistence;
+using CryptoCurrencyBrowser.DataJob.Jobs.Abstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace CryptoCurrencyBrowser.DataJob.Jobs
@@ -14,13 +19,17 @@ namespace CryptoCurrencyBrowser.DataJob.Jobs
         private readonly ILogger<CoinMarketCapJob> _logger;
         private readonly IClient _client;
         private readonly IConfiguration _configuration;
+        private readonly ICryptoCurrencyBrowserDbContext _dbContext;
         private CoinMarketCapClientConfiguration _coinMarketCapClientConfiguration;
 
-        public CoinMarketCapJob(ILogger<CoinMarketCapJob> logger, IConfiguration configuration, IClient client)
+        public CoinMarketCapJob(ILogger<CoinMarketCapJob> logger, IConfiguration configuration,
+            IClient client,
+            ICryptoCurrencyBrowserDbContext dbContext)
         {
             _logger = logger;
             _client = client;
             _configuration = configuration;
+            _dbContext = dbContext;
         }
 
         public async Task DoWork()
@@ -65,18 +74,34 @@ namespace CryptoCurrencyBrowser.DataJob.Jobs
 
         private async Task GetCoinMarketCapDataAsync()
         {
+            _logger.LogInformation("Get new Coin Market Cap data");
+
             var request = new HttpRequestMessage
             {
-                RequestUri = new Uri("https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=100&convert=USD"),
-                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=1&convert=USD"),
+                Method = HttpMethod.Get
             };
 
             request.Headers.Add(_coinMarketCapClientConfiguration.ApiKeyHeaderName, _coinMarketCapClientConfiguration.ApiKey);
             request.Headers.Add("Accepts", _coinMarketCapClientConfiguration.AcceptedMediaType);
 
             var response = await _client.SendAsync(request).ConfigureAwait(false);
-            var actualResponse = await response.Content.ReadAsStringAsync();
-            _logger.LogInformation(actualResponse);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseData = JObject.Parse(await response.Content.ReadAsStringAsync());
+                var data = responseData["data"].Children().ToList();
+                var cryptocurrencies = new List<CryptoCurrencyDto>();
+                foreach (var cryptocurrency in data)
+                {
+                    cryptocurrencies.Add(cryptocurrency.ToObject<CryptoCurrencyDto>(JsonSerializer.Create(new JsonSerializerSettings
+                    {
+                        ContractResolver = new DefaultContractResolver { NamingStrategy = new SnakeCaseNamingStrategy() }
+                    })));
+                }
+
+                var a = 0;
+            }
         }
     }
 }

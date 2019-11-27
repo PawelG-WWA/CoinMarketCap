@@ -10,4 +10,9 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CryptoCurrencyBrowser.Application\CryptoCurrencyBrowser.Application.csproj" />
+    <ProjectReference Include="..\CryptoCurrencyBrowser.Persistence\CryptoCurrencyBrowser.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,8 @@
 ﻿using Autofac;
+using CryptoCurrencyBrowser.Application.Persistence;
 using CryptoCurrencyBrowser.DataJob.Jobs.Abstractions;
+using CryptoCurrencyBrowser.Persistence;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -7,7 +10,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace CryptoCurrencyBrowser.DataJob
@@ -15,7 +17,7 @@ namespace CryptoCurrencyBrowser.DataJob
     public static class Host
     {
         public static IConfiguration Configuration { get; private set; }
-        
+
         public static IContainer Container { get; private set; }
 
         public static bool IsBootstrapSuccessful { get; private set; }
@@ -29,7 +31,7 @@ namespace CryptoCurrencyBrowser.DataJob
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json");
-            
+
             try
             {
                 Configuration = builder.Build();
@@ -57,13 +59,22 @@ namespace CryptoCurrencyBrowser.DataJob
                     return;
                 }
 
-                foreach(var job in jobs)
+                foreach (var job in jobs)
                 {
+                    // Just to note I know what I'm doing
+                    //
                     // I want just to schedule the work of any job to the thread pool
-                    // so I don't await
+                    // so I don't await in this static void method
                     //
                     // I want to start all possible jobs (currently, there is only one job)
                     // and want them to work on separate threads from thread pool
+                    //
+                    // Async/Await from bottom to top is possible in the console application
+                    // buit either the Main has to be async (I don't want it to be one) or I should call
+                    // .Wait() method on the StartJobs() in the Main
+                    //
+                    // I know Wait() is not desireable, because it stops the main thread from
+                    // doing things, but for console apps we can make an exception
                     Task.Run(() => job.DoWork());
                 }
             }
@@ -79,6 +90,15 @@ namespace CryptoCurrencyBrowser.DataJob
                 .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .Where(t => t.GetInterfaces().Contains(typeof(IJob)))
                 .AsImplementedInterfaces();
+            _containerBuilder.Register(ctx =>
+                {
+                    var optionsBuilder = new DbContextOptionsBuilder<CryptoCurrencyBrowserDbContext>();
+                    optionsBuilder.UseSqlServer(Configuration["ConnectionStrings:CryptoCurrencyBrowserDatabase"]);
+
+                    return new CryptoCurrencyBrowserDbContext(optionsBuilder.Options);
+                })
+            .As<ICryptoCurrencyBrowserDbContext>()
+            .SingleInstance();
             bootstrapper.ConfigureServices(_containerBuilder);
             Container = _containerBuilder.Build();
         }
