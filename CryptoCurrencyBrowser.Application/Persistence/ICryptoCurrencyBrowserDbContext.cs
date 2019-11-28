@@ -10,5 +10,6 @@ namespace CryptoCurrencyBrowser.Application.Persistence
         DbSet<Cryptocurrency> Cryptocurrencies { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
+        void UpdateRange(params object[] entities);
     }
 }
