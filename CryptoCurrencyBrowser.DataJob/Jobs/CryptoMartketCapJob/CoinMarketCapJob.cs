@@ -1,35 +1,35 @@
-﻿using CryptoCurrencyBrowser.Application.DataJob.Models;
+﻿using CryptoCurrencyBrowser.Application.Cryptocurrencies.AddOrUpdate;
 using CryptoCurrencyBrowser.Application.Persistence;
 using CryptoCurrencyBrowser.DataJob.Jobs.Abstractions;
+using CryptoCurrencyBrowser.DataJob.Jobs.CryptoMartketCapJob.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace CryptoCurrencyBrowser.DataJob.Jobs
+namespace CryptoCurrencyBrowser.DataJob.Jobs.CryptoMarketCapJob
 {
     public class CoinMarketCapJob : IJob
     {
         private readonly ILogger<CoinMarketCapJob> _logger;
         private readonly IClient _client;
         private readonly IConfiguration _configuration;
-        private readonly ICryptoCurrencyBrowserDbContext _dbContext;
+        private readonly IAddOrUpdateService _addOrUpdateService;
+        private readonly ICryptoCurrencyMapperService _cryptoCurrencyMapperService;
         private CoinMarketCapClientConfiguration _coinMarketCapClientConfiguration;
 
         public CoinMarketCapJob(ILogger<CoinMarketCapJob> logger, IConfiguration configuration,
             IClient client,
-            ICryptoCurrencyBrowserDbContext dbContext)
+            IAddOrUpdateService addOrUpdateService,
+            ICryptoCurrencyMapperService cryptoCurrencyMapperService)
         {
             _logger = logger;
             _client = client;
             _configuration = configuration;
-            _dbContext = dbContext;
+            _addOrUpdateService = addOrUpdateService;
+            _cryptoCurrencyMapperService = cryptoCurrencyMapperService;
         }
 
         public async Task DoWork()
@@ -42,8 +42,16 @@ namespace CryptoCurrencyBrowser.DataJob.Jobs
             {
                 while (true)
                 {
-                    await GetCoinMarketCapDataAsync()
+                    var response = await GetCoinMarketCapDataAsync()
                         .ConfigureAwait(false);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseModel = await response.Content.ReadAsStringAsync();
+                        var addOrUpdateModel = _cryptoCurrencyMapperService.MapToAddOrUpdateModel(responseModel);
+                        await _addOrUpdateService.AddOrUpdateCryptocurrencies(addOrUpdateModel);
+                        _logger.LogInformation("Databse updated");
+                    }
 
                     await Task.Delay(TimeSpan.FromHours(1))
                         .ConfigureAwait(false);
@@ -72,36 +80,20 @@ namespace CryptoCurrencyBrowser.DataJob.Jobs
             return isConfigureSuccess;
         }
 
-        private async Task GetCoinMarketCapDataAsync()
+        private async Task<HttpResponseMessage> GetCoinMarketCapDataAsync()
         {
             _logger.LogInformation("Get new Coin Market Cap data");
 
             var request = new HttpRequestMessage
             {
-                RequestUri = new Uri("https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=1&convert=USD"),
+                RequestUri = new Uri($"{_configuration["CoinMarketCap:Api:BaseUrl"]}/cryptocurrency/listings/latest?start=1&limit=5"),
                 Method = HttpMethod.Get
             };
 
             request.Headers.Add(_coinMarketCapClientConfiguration.ApiKeyHeaderName, _coinMarketCapClientConfiguration.ApiKey);
             request.Headers.Add("Accepts", _coinMarketCapClientConfiguration.AcceptedMediaType);
 
-            var response = await _client.SendAsync(request).ConfigureAwait(false);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseData = JObject.Parse(await response.Content.ReadAsStringAsync());
-                var data = responseData["data"].Children().ToList();
-                var cryptocurrencies = new List<CryptoCurrencyDto>();
-                foreach (var cryptocurrency in data)
-                {
-                    cryptocurrencies.Add(cryptocurrency.ToObject<CryptoCurrencyDto>(JsonSerializer.Create(new JsonSerializerSettings
-                    {
-                        ContractResolver = new DefaultContractResolver { NamingStrategy = new SnakeCaseNamingStrategy() }
-                    })));
-                }
-
-                var a = 0;
-            }
+            return await _client.SendAsync(request).ConfigureAwait(false);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Autofac;
+using CryptoCurrencyBrowser.Application.Cryptocurrencies.AddOrUpdate;
 using CryptoCurrencyBrowser.Application.Persistence;
 using CryptoCurrencyBrowser.DataJob.Jobs.Abstractions;
+using CryptoCurrencyBrowser.DataJob.Jobs.CryptoMartketCapJob.Services;
 using CryptoCurrencyBrowser.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -47,7 +49,7 @@ namespace CryptoCurrencyBrowser.DataJob
             IsBootstrapSuccessful = true;
         }
 
-        public static void StartJobs()
+        public static async Task StartJobs()
         {
             using (var scope = Container.BeginLifetimeScope())
             {
@@ -59,24 +61,14 @@ namespace CryptoCurrencyBrowser.DataJob
                     return;
                 }
 
+                var jobTasks = new List<Task>();
+
                 foreach (var job in jobs)
                 {
-                    // Just to note I know what I'm doing
-                    //
-                    // I want just to schedule the work of any job to the thread pool
-                    // so I don't await in this static void method
-                    //
-                    // I want to start all possible jobs (currently, there is only one job)
-                    // and want them to work on separate threads from thread pool
-                    //
-                    // Async/Await from bottom to top is possible in the console application
-                    // buit either the Main has to be async (I don't want it to be one) or I should call
-                    // .Wait() method on the StartJobs() in the Main
-                    //
-                    // I know Wait() is not desireable, because it stops the main thread from
-                    // doing things, but for console apps we can make an exception
-                    Task.Run(() => job.DoWork());
+                    jobTasks.Add(job.DoWork());
                 }
+
+                await Task.WhenAll(jobTasks);
             }
         }
 
@@ -85,6 +77,10 @@ namespace CryptoCurrencyBrowser.DataJob
             _containerBuilder = new ContainerBuilder();
             _containerBuilder.Register(c => Configuration).As<IConfiguration>();
             _containerBuilder.RegisterType(typeof(Client))
+                .AsImplementedInterfaces();
+            _containerBuilder.RegisterType(typeof(AddOrUpdateService))
+                .AsImplementedInterfaces();
+            _containerBuilder.RegisterType(typeof(CryptoCurrencyMapperService))
                 .AsImplementedInterfaces();
             _containerBuilder
                 .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())

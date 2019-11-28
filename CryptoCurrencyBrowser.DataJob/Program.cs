@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace CryptoCurrencyBrowser.DataJob
 {
@@ -10,7 +11,8 @@ namespace CryptoCurrencyBrowser.DataJob
 
             if (Host.IsBootstrapSuccessful)
             {
-                Host.StartJobs();
+                // So I will know that exceptions occured
+                Host.StartJobs().GetAwaiter().GetResult();
             }
 
             Console.ReadLine();

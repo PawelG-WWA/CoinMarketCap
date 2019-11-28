@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
 
-namespace CryptoCurrencyBrowser.DataJob.Jobs
+namespace CryptoCurrencyBrowser.DataJob.Jobs.CryptoMarketCapJob
 {
     public class CoinMarketCapClientConfiguration
     {

@@ -1,17 +1,21 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace CryptoCurrencyBrowser.Application.DataJob.Models
+namespace CryptoCurrencyBrowser.DataJob.Jobs.CryptoMarketCapJob.Models
 {
     public class CryptoCurrencyDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Symbol { get; set; }
+        [JsonProperty("cmc_rank")]
         public int CMCRank { get; set; }
+        [JsonProperty("circulating_supply")]
         public long CirculatingSupply { get; set; }
+        [JsonProperty("total_supply")]
         public long TotalSupply { get; set; }
-        public long MaxSupply { get; set; }
+        [JsonProperty("max_supply")]
+        public long? MaxSupply { get; set; }
         public Quote Quote { get; set; }
     }
 
@@ -29,6 +33,7 @@ namespace CryptoCurrencyBrowser.Application.DataJob.Models
         public decimal Price { get; set; }
         [JsonProperty("volume_24h")]
         public decimal Volume24h { get; set; }
+        [JsonProperty("market_cap")]
         public decimal MarketCap { get; set; }
         [JsonProperty("percent_change_1h")]
         public double PercentChange1h { get; set; }
@@ -36,6 +41,7 @@ namespace CryptoCurrencyBrowser.Application.DataJob.Models
         public double PercentChange24h { get; set; }
         [JsonProperty("percent_change_7d")]
         public double PercentChange7d { get; set; }
+        [JsonProperty("last_updated")]
         public DateTime LastUpdated { get; set; }
     }
 }
