@@ -7,10 +7,8 @@ namespace CryptoCurrencyBrowser.DI.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            LoggerFactory.Create(x => x.AddConsole());
-
             builder
-                .Register(c => LoggerFactory.Create(x => x.AddConsole()));
+                .Register(c => new LoggerFactory().AddConsole()).SingleInstance();
 
             builder.RegisterGeneric(typeof(Logger<>))
                 .As(typeof(ILogger<>));

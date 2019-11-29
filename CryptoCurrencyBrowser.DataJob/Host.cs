@@ -26,7 +26,7 @@ namespace CryptoCurrencyBrowser.DataJob
 
         private static ContainerBuilder _containerBuilder;
 
-        private static ILogger _logger = LoggerFactory.Create(x => x.AddConsole()).CreateLogger("Host");
+        private static ILogger _logger = new LoggerFactory().AddConsole().CreateLogger("Host");
 
         public static void Bootstrap()
         {
@@ -88,12 +88,12 @@ namespace CryptoCurrencyBrowser.DataJob
                 .AsImplementedInterfaces();
             _containerBuilder.Register(ctx =>
                 {
-                    var optionsBuilder = new DbContextOptionsBuilder<CryptoCurrencyBrowserDbContext>();
+                    var optionsBuilder = new DbContextOptionsBuilder<CryptocurrencyBrowserDbContext>();
                     optionsBuilder.UseSqlServer(Configuration["ConnectionStrings:CryptoCurrencyBrowserDatabase"]);
 
-                    return new CryptoCurrencyBrowserDbContext(optionsBuilder.Options);
+                    return new CryptocurrencyBrowserDbContext(optionsBuilder.Options);
                 })
-            .As<ICryptoCurrencyBrowserDbContext>()
+            .As<ICryptocurrencyBrowserDbContext>()
             .SingleInstance();
             bootstrapper.ConfigureServices(_containerBuilder);
             Container = _containerBuilder.Build();

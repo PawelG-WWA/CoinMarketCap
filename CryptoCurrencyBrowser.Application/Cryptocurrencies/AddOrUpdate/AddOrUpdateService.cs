@@ -14,10 +14,10 @@ namespace CryptoCurrencyBrowser.Application.Cryptocurrencies.AddOrUpdate
 
     public class AddOrUpdateService : IAddOrUpdateService
     {
-        private readonly ICryptoCurrencyBrowserDbContext _dbContext;
+        private readonly ICryptocurrencyBrowserDbContext _dbContext;
         private readonly ILogger<AddOrUpdateService> _logger;
 
-        public AddOrUpdateService(ICryptoCurrencyBrowserDbContext dbContext,
+        public AddOrUpdateService(ICryptocurrencyBrowserDbContext dbContext,
             ILogger<AddOrUpdateService> logger)
         {
             _dbContext = dbContext;

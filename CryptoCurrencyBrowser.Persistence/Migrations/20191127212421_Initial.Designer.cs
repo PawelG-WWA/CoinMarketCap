@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CryptoCurrencyBrowser.Persistence.Migrations
 {
-    [DbContext(typeof(CryptoCurrencyBrowserDbContext))]
+    [DbContext(typeof(CryptocurrencyBrowserDbContext))]
     [Migration("20191127212421_Initial")]
     partial class Initial
     {

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CryptoCurrencyBrowser.Persistence.Migrations
 {
-    [DbContext(typeof(CryptoCurrencyBrowserDbContext))]
+    [DbContext(typeof(CryptocurrencyBrowserDbContext))]
     [Migration("20191128132427_MaxSupplyNullable")]
     partial class MaxSupplyNullable
     {

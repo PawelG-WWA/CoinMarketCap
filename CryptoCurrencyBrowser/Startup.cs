@@ -1,8 +1,12 @@
+using CryptoCurrencyBrowser.Application.Cryptocurrencies.GetCryptocurrencyCards;
+using CryptoCurrencyBrowser.Application.Persistence;
+using CryptoCurrencyBrowser.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,8 +25,10 @@ namespace CryptoCurrencyBrowser
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
+            services.AddDbContext<ICryptocurrencyBrowserDbContext, CryptocurrencyBrowserDbContext>(options => options
+                .UseSqlServer(Configuration["CryptocurrencyBrowserDbContext:ConnectionString"]));
             // In production, the Angular files will be served from this directory
+            services.AddScoped<IGetCryptocurrencyCardsService, GetCryptocurrencyCardsService>();
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
