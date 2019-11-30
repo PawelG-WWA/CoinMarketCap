@@ -5,18 +5,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { CryptocurrencyCardComponent } from 'src/app/cryptocurrency-card/cryptocurrency-card.component';
+import { CryptocurrencyDetailsComponent } from 'src/app/cryptocurrency-details/cryptocurrency-details.component';
+
+import { CRYPTOCURRENCY_CARD_SERVICE_PROVIDER } from 'src/app/services/service-provider';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent
+    CryptocurrencyCardComponent,
+    CryptocurrencyDetailsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -24,11 +24,12 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'details/:id', component: CryptocurrencyDetailsComponent }
     ])
   ],
-  providers: [],
+  providers: [
+    CRYPTOCURRENCY_CARD_SERVICE_PROVIDER
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
