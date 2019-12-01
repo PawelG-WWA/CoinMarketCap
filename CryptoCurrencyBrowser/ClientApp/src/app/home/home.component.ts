@@ -18,6 +18,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.cryptocurrencyCardService
       .getCards()
-      .subscribe((result: ICryptocurrencyCard[]) => this.cryptocurrencyCards = result);
+      .subscribe((result: ICryptocurrencyCard[]) => this.cryptocurrencyCards = result.sort((x, y) => x.rank - y.rank));
   }
 }

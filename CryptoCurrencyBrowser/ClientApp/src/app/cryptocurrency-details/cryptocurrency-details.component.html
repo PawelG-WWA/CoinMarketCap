@@ -1,1 +1,54 @@
-<h1>Details</h1>
+<section class="cryptocurrency">
+    <div class="cryptocurrency-heading">
+        <h1>{{cryptocurrency?.name}}</h1>
+        <p>{{cryptocurrency?.symbol}}</p>
+    </div>
+    <p class="price">${{cryptocurrency?.currentPrice}}</p>
+    <section class="row cryptocurrency-other-details">
+        <div class="col-3">
+            <label>Circulating supply</label>
+            <p>{{cryptocurrency?.circulatingSupply}}</p>
+        </div>
+        <div class="col-3">
+            <label>Total supply</label>
+            <p>{{cryptocurrency?.totalSupply}}</p>
+        </div>
+    </section>
+    <section class="row cryptocurrency-other-details">
+        <div class="col-3" *ngIf="cryptocurrency?.maxSupply">
+            <label>Max supply</label>
+            <p>{{cryptocurrency?.maxSupply}}</p>
+        </div>
+        <div class="col-3">
+            <label>Volume 24h</label>
+            <p>{{cryptocurrency?.volume24h}}</p>
+        </div>
+    </section>
+    <section class="row cryptocurrency-other-details">
+        <div class="col-3">
+            <label>Market Cap</label>
+            <p>{{cryptocurrency?.marketCap}}</p>
+        </div>
+    </section>
+    <section class="row cryptocurrency-other-details">
+        <div class="col-3">
+            <label>% change 1h</label>
+            <p [ngClass]="{growth: cryptocurrency?.percentChange1h > 0, decline: cryptocurrency?.percentChange1h < 0}">{{cryptocurrency?.percentChange1h}}</p>
+        </div>
+        <div class="col-3">
+            <label>% change 24h</label>
+            <p [ngClass]="{growth: cryptocurrency?.percentChange24h > 0, decline: cryptocurrency?.percentChange24h < 0}">{{cryptocurrency?.percentChange24h}}</p>
+        </div>
+        <div class="col-3">
+            <label>% change 7d</label>
+            <p [ngClass]="{growth: cryptocurrency?.percentChange7d > 0, decline: cryptocurrency?.percentChange7d < 0}">{{cryptocurrency?.percentChange7d}}</p>
+        </div>
+    </section>
+    <section class="row cryptocurrency-other-details">
+            <div class="col-3">
+                <label>Last updated</label>
+                <p>{{cryptocurrency?.lastUpdated | date:'short'}}</p>
+            </div>
+
+        </section>
+</section>

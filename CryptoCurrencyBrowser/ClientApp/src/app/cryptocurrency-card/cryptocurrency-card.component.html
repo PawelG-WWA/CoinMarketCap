@@ -1,8 +1,38 @@
-<div style="border: 1px solid black" (click)="goToDetails(cryptocurrencyCard.id)">
-    <p>name: {{ cryptocurrencyCard.name}}</p>
-    <p>symbol: {{ cryptocurrencyCard.symbol}}</p>
-    <p>price: {{ cryptocurrencyCard.currentPrice}}</p>
-    <p>marketCap: {{ cryptocurrencyCard.marketCap}}</p>
-    <p>volume: {{ cryptocurrencyCard.volume24h}}</p>
-    <p>% change: {{ cryptocurrencyCard.percentChange24h}}</p>
+<div class="cryptocurrency-card col-12" (click)="goToDetails(cryptocurrencyCard.id)">
+    <div class="row cryptocurrency-card-header">
+        <div class="card-symbol col-4">
+            <p>{{ cryptocurrencyCard.symbol }}</p>
+        </div>
+        <div class="card-name col-8">
+            <div class="summary">
+                <p>{{ cryptocurrencyCard.name }}</p>
+                <p class="price">${{ cryptocurrencyCard.currentPrice }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="cryptocurrency-card-details">
+        <div class="row card-description-row">
+            <div class="col-6">
+                <label>Market Cap</label>
+                <p>{{ cryptocurrencyCard.marketCap }}</p>
+            </div>
+        </div>
+        <div class="row card-description-row">
+            <div class="col-6">
+                <label>Volume 24h</label>
+                <p>{{ cryptocurrencyCard.volume24h }}</p>
+            </div>
+            <div class="col-6">
+                <label>% change 24h</label>
+                <p [ngClass]="{growth: cryptocurrencyCard.percentChange24h > 0, decline: cryptocurrencyCard.percentChange24h < 0}">{{ cryptocurrencyCard.percentChange24h }}</p>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="row cryptocurrency-details-link">
+            <div class="col-12">
+                READ MORE
+            </div>
+        </div>
+    </div>
 </div>

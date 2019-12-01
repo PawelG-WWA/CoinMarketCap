@@ -1,2 +1,5 @@
-<app-cryptocurrencycard *ngFor="let cryptocurrencyCard of cryptocurrencyCards"
-    [cryptocurrencyCard]="cryptocurrencyCard"></app-cryptocurrencycard>
+<div class="row">
+    <div class="col-4" *ngFor="let cryptocurrencyCard of cryptocurrencyCards">
+        <app-cryptocurrencycard  [cryptocurrencyCard]="cryptocurrencyCard"></app-cryptocurrencycard>
+    </div>
+</div>

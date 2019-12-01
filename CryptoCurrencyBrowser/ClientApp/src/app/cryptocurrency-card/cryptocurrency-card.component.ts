@@ -7,7 +7,8 @@ import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-cryptocurrencycard',
-    templateUrl: './cryptocurrency-card.component.html'
+    templateUrl: './cryptocurrency-card.component.html',
+    styleUrls: ['./cryptocurrency-card.component.css']
 })
 export class CryptocurrencyCardComponent {
     @Input() cryptocurrencyCard: ICryptocurrencyCard;

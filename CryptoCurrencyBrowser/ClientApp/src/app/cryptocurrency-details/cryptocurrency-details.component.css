@@ -1,0 +1,36 @@
+.cryptocurrency-heading {
+    overflow: hidden;
+    display: flex;
+}
+
+.cryptocurrency-heading h1 {
+    padding-right: 1vw;
+    border-right: 1px solid lightgray;
+}
+
+.cryptocurrency-heading p {
+    margin: auto 0 auto 0;
+    padding-left: 1vw;
+}
+
+.cryptocurrency .price {
+    color:green;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.cryptocurrency-other-details {
+    font-weight: bold;
+}
+
+.cryptocurrency-other-details label {
+    color: gray;
+}
+
+.growth {
+    color: green;
+}
+
+.decline {
+    color: #e30435;
+}
