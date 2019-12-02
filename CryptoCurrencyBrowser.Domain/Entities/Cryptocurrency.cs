@@ -13,7 +13,7 @@ namespace CryptoCurrencyBrowser.Domain.Entities
         public long TotalSupply { get; set; }
         public long? MaxSupply { get; set; }
         public decimal CurrentPrice { get; set; }
-        public decimal Volume24h { get; set; }
+        public decimal? Volume24h { get; set; }
         public decimal MarketCap { get; set; }
         public double PercentChange1h { get; set; }
         public double PercentChange24h { get; set; }

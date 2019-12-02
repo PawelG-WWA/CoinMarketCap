@@ -86,7 +86,7 @@ namespace CryptoCurrencyBrowser.DataJob.Jobs.CryptoMarketCapJob
 
             var request = new HttpRequestMessage
             {
-                RequestUri = new Uri($"{_configuration["CoinMarketCap:Api:BaseUrl"]}/cryptocurrency/listings/latest?start=1&limit=7"),
+                RequestUri = new Uri($"{_configuration["CoinMarketCap:Api:BaseUrl"]}/cryptocurrency/listings/latest?start=1&limit=500"),
                 Method = HttpMethod.Get
             };
 

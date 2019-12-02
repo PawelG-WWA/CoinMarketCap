@@ -8,6 +8,9 @@ namespace CryptoCurrencyBrowser.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Cryptocurrency> builder)
         {
+            builder.Property(cryptocurrency => cryptocurrency.Id)
+                .ValueGeneratedOnAdd();
+
             builder.HasKey(cryptocurrency => new { cryptocurrency.Id, cryptocurrency.ExternalId });
         }
     }

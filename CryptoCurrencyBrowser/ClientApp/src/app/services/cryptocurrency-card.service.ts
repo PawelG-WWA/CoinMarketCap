@@ -6,9 +6,9 @@ export class CryptocurrencyCardService {
 
     constructor(private http: HttpClient) {}
 
-    public getCards() {
+    public getCards(pageNumber: number) {
         return this.http
-            .get('https://localhost:44332/api/CryptocurrencyCards');
+            .get(`https://localhost:44332/api/CryptocurrencyCards/${pageNumber}`);
     }
 }
 

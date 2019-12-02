@@ -20,18 +20,18 @@ namespace CryptoCurrencyBrowser.Persistence.Migrations
                     Rank = table.Column<int>(nullable: false),
                     CirculatingSupply = table.Column<long>(nullable: false),
                     TotalSupply = table.Column<long>(nullable: false),
-                    MaxSupply = table.Column<long>(nullable: false),
+                    MaxSupply = table.Column<long>(nullable: true),
                     CurrentPrice = table.Column<decimal>(nullable: false),
-                    Volume24h = table.Column<decimal>(nullable: false),
+                    Volume24h = table.Column<decimal>(nullable: true),
                     MarketCap = table.Column<decimal>(nullable: false),
                     PercentChange1h = table.Column<double>(nullable: false),
                     PercentChange24h = table.Column<double>(nullable: false),
-                    PercentCHange7d = table.Column<double>(nullable: false),
+                    PercentChange7d = table.Column<double>(nullable: false),
                     LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cryptocurrencies", x => x.Id);
+                    table.PrimaryKey("PK_Cryptocurrencies", x => new { x.Id, x.ExternalId });
                 });
         }
 

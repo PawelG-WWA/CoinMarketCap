@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CryptoCurrencyBrowser.Persistence.Migrations
 {
     [DbContext(typeof(CryptocurrencyBrowserDbContext))]
-    [Migration("20191127212421_Initial")]
+    [Migration("20191202205105_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,25 +27,25 @@ namespace CryptoCurrencyBrowser.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ExternalId");
+
                     b.Property<long>("CirculatingSupply");
 
                     b.Property<decimal>("CurrentPrice");
-
-                    b.Property<int>("ExternalId");
 
                     b.Property<DateTime>("LastUpdated");
 
                     b.Property<decimal>("MarketCap");
 
-                    b.Property<long>("MaxSupply");
+                    b.Property<long?>("MaxSupply");
 
                     b.Property<string>("Name");
-
-                    b.Property<double>("PercentCHange7d");
 
                     b.Property<double>("PercentChange1h");
 
                     b.Property<double>("PercentChange24h");
+
+                    b.Property<double>("PercentChange7d");
 
                     b.Property<int>("Rank");
 
@@ -53,9 +53,9 @@ namespace CryptoCurrencyBrowser.Persistence.Migrations
 
                     b.Property<long>("TotalSupply");
 
-                    b.Property<decimal>("Volume24h");
+                    b.Property<decimal?>("Volume24h");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id", "ExternalId");
 
                     b.ToTable("Cryptocurrencies");
                 });

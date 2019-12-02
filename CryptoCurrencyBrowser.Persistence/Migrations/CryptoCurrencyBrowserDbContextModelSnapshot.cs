@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CryptoCurrencyBrowser.Persistence.Migrations
 {
     [DbContext(typeof(CryptocurrencyBrowserDbContext))]
-    partial class CryptoCurrencyBrowserDbContextModelSnapshot : ModelSnapshot
+    partial class CryptocurrencyBrowserDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -25,11 +25,11 @@ namespace CryptoCurrencyBrowser.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ExternalId");
+
                     b.Property<long>("CirculatingSupply");
 
                     b.Property<decimal>("CurrentPrice");
-
-                    b.Property<int>("ExternalId");
 
                     b.Property<DateTime>("LastUpdated");
 
@@ -51,9 +51,9 @@ namespace CryptoCurrencyBrowser.Persistence.Migrations
 
                     b.Property<long>("TotalSupply");
 
-                    b.Property<decimal>("Volume24h");
+                    b.Property<decimal?>("Volume24h");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id", "ExternalId");
 
                     b.ToTable("Cryptocurrencies");
                 });

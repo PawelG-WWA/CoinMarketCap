@@ -15,9 +15,10 @@ namespace CryptoCurrencyBrowser.Controllers
             _getCryptocurrencyCardsService = getCryptocurrencyCardsService;
         }
 
-        public async Task<IActionResult> GetCards()
+        [Route("{pageNumber}")]
+        public async Task<IActionResult> GetCards(int pageNumber)
         {
-            return Ok(await _getCryptocurrencyCardsService.GetCryptocurrencyCards());
+            return Ok(await _getCryptocurrencyCardsService.GetCryptocurrencyCards(pageNumber));
         }
     }
 }

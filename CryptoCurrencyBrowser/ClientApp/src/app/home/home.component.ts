@@ -11,13 +11,22 @@ import { ICryptocurrencyCard } from 'src/app/cryptocurrency-card/cryptocurrency-
 export class HomeComponent implements OnInit {
 
   cryptocurrencyCards: ICryptocurrencyCard[];
+  private pageNumber = 0;
 
   constructor(private cryptocurrencyCardService: CryptocurrencyCardService) {
   }
 
   ngOnInit(): void {
+    this.getCardsPage(++this.pageNumber);
+  }
+
+  nextPage(): void {
+    this.getCardsPage(++this.pageNumber);
+  }
+
+  private getCardsPage(pageNumber: number) {
     this.cryptocurrencyCardService
-      .getCards()
+      .getCards(pageNumber)
       .subscribe((result: ICryptocurrencyCard[]) => this.cryptocurrencyCards = result.sort((x, y) => x.rank - y.rank));
   }
 }

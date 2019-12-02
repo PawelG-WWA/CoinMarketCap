@@ -8,7 +8,7 @@ namespace CryptoCurrencyBrowser.Persistence
     public class CryptocurrencyBrowserDbContext : DbContext, ICryptocurrencyBrowserDbContext
     {
         public DbSet<Cryptocurrency> Cryptocurrencies { get; set; }
-        public DbSet<CryptocurrencyCard> CryptocurrencyCards { get; set; }
+        public DbQuery<CryptocurrencyCard> CryptocurrencyCards { get; set; }
 
         public CryptocurrencyBrowserDbContext(DbContextOptions<CryptocurrencyBrowserDbContext> options)
             : base(options)

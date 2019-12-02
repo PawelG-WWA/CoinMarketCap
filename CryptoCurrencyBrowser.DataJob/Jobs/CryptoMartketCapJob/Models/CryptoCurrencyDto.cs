@@ -32,7 +32,7 @@ namespace CryptoCurrencyBrowser.DataJob.Jobs.CryptoMarketCapJob.Models
     {
         public decimal Price { get; set; }
         [JsonProperty("volume_24h")]
-        public decimal Volume24h { get; set; }
+        public decimal? Volume24h { get; set; }
         [JsonProperty("market_cap")]
         public decimal MarketCap { get; set; }
         [JsonProperty("percent_change_1h")]

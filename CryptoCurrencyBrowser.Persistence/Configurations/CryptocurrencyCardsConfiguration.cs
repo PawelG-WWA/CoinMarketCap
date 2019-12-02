@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CryptoCurrencyBrowser.Persistence.Configurations
 {
-    public class CryptocurrencyCardsConfiguration : IEntityTypeConfiguration<CryptocurrencyCard>
+    public class CryptocurrencyCardsConfiguration : IQueryTypeConfiguration<CryptocurrencyCard>
     {
-        public void Configure(EntityTypeBuilder<CryptocurrencyCard> builder)
+        public void Configure(QueryTypeBuilder<CryptocurrencyCard> builder)
         {
-            builder.ToTable("View_CryptoCurrencyCards");
+            builder.ToView("View_CryptocurrencyCards");
         }
     }
 }

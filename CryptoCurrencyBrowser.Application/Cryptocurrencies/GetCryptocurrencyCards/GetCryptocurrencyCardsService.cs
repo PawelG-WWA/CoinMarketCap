@@ -9,21 +9,27 @@ namespace CryptoCurrencyBrowser.Application.Cryptocurrencies.GetCryptocurrencyCa
 {
     public interface IGetCryptocurrencyCardsService
     {
-        Task<List<CryptocurrencyCard>> GetCryptocurrencyCards();
+        Task<List<CryptocurrencyCard>> GetCryptocurrencyCards(int page);
     }
 
     public class GetCryptocurrencyCardsService : IGetCryptocurrencyCardsService
     {
         private readonly ICryptocurrencyBrowserDbContext _dbContext;
+        private const int PAGE_SIZE = 9;
 
         public GetCryptocurrencyCardsService(ICryptocurrencyBrowserDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<List<CryptocurrencyCard>> GetCryptocurrencyCards()
+        public async Task<List<CryptocurrencyCard>> GetCryptocurrencyCards(int page)
         {
-            return await _dbContext.CryptocurrencyCards.Select(x => x).ToListAsync();
+            return await _dbContext.CryptocurrencyCards
+                .OrderBy(x => x.Rank)
+                .Skip((page - 1) * PAGE_SIZE)
+                .Take(PAGE_SIZE)
+                .Select(x => x)
+                .ToListAsync();
         }
     }
 }
