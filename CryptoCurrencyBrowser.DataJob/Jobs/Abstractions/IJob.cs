@@ -4,6 +4,6 @@ namespace CryptoCurrencyBrowser.DataJob.Jobs.Abstractions
 {
     public interface IJob
     { 
-        Task DoWork();
+        Task DoWork(bool doForever = true);
     }
 }

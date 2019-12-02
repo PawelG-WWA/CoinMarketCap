@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoCurrencyBrowser.Domai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoCurrencyBrowser.DI", "CryptoCurrencyBrowser.DI\CryptoCurrencyBrowser.DI.csproj", "{48F6E099-AC3C-4E59-BFB9-0CCFA291DEF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoCurrencyBrowser.Persistence", "CryptoCurrencyBrowser.Persistence\CryptoCurrencyBrowser.Persistence.csproj", "{DEA7D083-CFF1-4A36-80A1-98E8B62C6ACF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoCurrencyBrowser.Persistence", "CryptoCurrencyBrowser.Persistence\CryptoCurrencyBrowser.Persistence.csproj", "{DEA7D083-CFF1-4A36-80A1-98E8B62C6ACF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoCurrencyBrowser.Application", "CryptoCurrencyBrowser.Application\CryptoCurrencyBrowser.Application.csproj", "{0F758E06-3ADF-489C-BB07-D888B1CE5947}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CryptoCurrencyBrowser.Application", "CryptoCurrencyBrowser.Application\CryptoCurrencyBrowser.Application.csproj", "{0F758E06-3ADF-489C-BB07-D888B1CE5947}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoCurrencyBrowser.Tests", "CryptoCurrencyBrowser.Tests\CryptoCurrencyBrowser.Tests.csproj", "{6B713A1C-B59B-4934-96BE-5F11F1DAE1CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{0F758E06-3ADF-489C-BB07-D888B1CE5947}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F758E06-3ADF-489C-BB07-D888B1CE5947}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F758E06-3ADF-489C-BB07-D888B1CE5947}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B713A1C-B59B-4934-96BE-5F11F1DAE1CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B713A1C-B59B-4934-96BE-5F11F1DAE1CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B713A1C-B59B-4934-96BE-5F11F1DAE1CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B713A1C-B59B-4934-96BE-5F11F1DAE1CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,11 +1,9 @@
 ﻿using CryptoCurrencyBrowser.Application.Cryptocurrencies.AddOrUpdate;
-using CryptoCurrencyBrowser.Application.Persistence;
 using CryptoCurrencyBrowser.DataJob.Jobs.Abstractions;
 using CryptoCurrencyBrowser.DataJob.Jobs.CryptoMartketCapJob.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -20,7 +18,8 @@ namespace CryptoCurrencyBrowser.DataJob.Jobs.CryptoMarketCapJob
         private readonly ICryptoCurrencyMapperService _cryptoCurrencyMapperService;
         private CoinMarketCapClientConfiguration _coinMarketCapClientConfiguration;
 
-        public CoinMarketCapJob(ILogger<CoinMarketCapJob> logger, IConfiguration configuration,
+        public CoinMarketCapJob(ILogger<CoinMarketCapJob> logger,
+            IConfiguration configuration,
             IClient client,
             IAddOrUpdateService addOrUpdateService,
             ICryptoCurrencyMapperService cryptoCurrencyMapperService)
@@ -32,7 +31,7 @@ namespace CryptoCurrencyBrowser.DataJob.Jobs.CryptoMarketCapJob
             _cryptoCurrencyMapperService = cryptoCurrencyMapperService;
         }
 
-        public async Task DoWork()
+        public async Task DoWork(bool doForever = true)
         {
             _logger.LogInformation($"Starting: {nameof(CoinMarketCapJob)}");
 
@@ -40,7 +39,7 @@ namespace CryptoCurrencyBrowser.DataJob.Jobs.CryptoMarketCapJob
 
             if (isConfigureSuccess)
             {
-                while (true)
+                do
                 {
                     var response = await GetCoinMarketCapDataAsync()
                         .ConfigureAwait(false);
@@ -53,9 +52,12 @@ namespace CryptoCurrencyBrowser.DataJob.Jobs.CryptoMarketCapJob
                         _logger.LogInformation("Databse updated");
                     }
 
-                    await Task.Delay(TimeSpan.FromHours(1))
-                        .ConfigureAwait(false);
-                }
+                    if (doForever)
+                    {
+                        await Task.Delay(TimeSpan.FromHours(1))
+                            .ConfigureAwait(false);
+                    }
+                } while (doForever);
             }
         }
 

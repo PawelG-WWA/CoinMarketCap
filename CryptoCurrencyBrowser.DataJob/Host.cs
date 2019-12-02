@@ -43,7 +43,7 @@ namespace CryptoCurrencyBrowser.DataJob
             {
                 _logger.LogError(ex.Message);
                 _logger.LogError(ex.StackTrace);
-                return;
+                throw;
             }
 
             IsBootstrapSuccessful = true;
